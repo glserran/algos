@@ -1,0 +1,24 @@
+
+
+typedef int boolean;
+
+#define true 1
+#define false 0
+
+
+struct _list_int {
+
+  int size;
+  int* array_ptr;
+} ;
+
+typedef struct _list_int list;
+
+list lrandom(int size);
+list lcopy(list l);
+char* to_string(list l);
+list append(list l,list m);
+list cons(int n, list l);
+int head(list l);
+int tail(list l);
+boolean is_empty(list l);

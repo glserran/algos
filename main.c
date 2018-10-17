@@ -1,0 +1,132 @@
+#include<stdio.h>
+#include"list.h"
+
+list insertion_sort(list l);
+
+list to_list(int n,int array[n]);
+list n_to_list(int n);
+list  merge(list n,int p,int q, int r);
+list sublist(list l,int n);
+list sublist_range(list l,int s,int n);
+list array_to_list(int n,int* array_ptr);
+list append_int(list l , int n);
+
+int main(){
+
+	printf("hola mundo\n");
+
+	list random_list = lrandom(10);
+	list rando_copy = lcopy(random_list);
+	list append_list = append(random_list,rando_copy);
+	printf("%s\n",to_string(random_list));
+	printf("copy=%s\n",to_string(rando_copy));
+	printf("append=%s\n",to_string(append_list));
+
+	const int n = 5;
+	int array[n] = {-5,4,7,2,1};
+	
+	list insert_sort_test = to_list(n,array);
+	list insert_sort_test_copy = lcopy(insert_sort_test);
+
+	
+	printf("insert_sort_test=%s\n",to_string(insert_sort_test));
+	printf("insert_sort_result=%s\n",to_string(insertion_sort(insert_sort_test_copy)));
+	printf("sublist=%s\n",to_string(sublist(insert_sort_test,2)));
+	printf("sublist_range=%s\n",to_string(sublist_range(insert_sort_test,1,3)));
+	printf("append_int=%s\n",to_string(append_int(insert_sort_test_copy,-2222)));
+	return 0;
+
+}
+
+list array_to_list(int size,int* array_ptr){
+
+  list new_list;
+  new_list.size = size;
+  new_list.array_ptr = array_ptr;
+
+  return lcopy(new_list);
+}
+
+list sublist(list l,int n){
+
+  return array_to_list(l.size -n, l.array_ptr + n);
+  
+
+  
+}
+
+list sublist_range(list l, int s, int n){
+
+  int size = s+n-1 >= l.size ? l.size - s : n;
+  
+  return array_to_list(size, l.array_ptr + s);
+
+  
+}
+
+list n_to_list(int n){
+
+  list new_list;
+
+  new_list.size = 1;
+  new_list.array_ptr = (int*) malloc(sizeof(int));
+  new_list.array_ptr[0] = n;
+  return new_list;
+  
+}
+
+list append_int(list l, int n){
+
+
+  return append(l, n_to_list(n));
+
+  
+}
+
+
+list to_list(int n, int array[n]){
+
+  list new_list;
+
+  new_list.size = n;
+  int* array_ptr = (int*) malloc(sizeof(int)*n);
+  
+  for(int i=0;i<n;i++){
+
+    array_ptr[i] = array[i];
+  }
+
+  new_list.array_ptr = array_ptr;
+
+  return new_list;
+  
+}
+
+
+list insertion_sort(list l){
+
+  int size = l.size;
+  int* array = l.array_ptr;
+
+  for(int i=1;i<size;i++){
+
+    int current = array[i];
+
+    int j = i;
+    
+    while(j>0 && current<array[j-1]){
+
+      array[j] = array[j-1];
+      j--;
+      
+    }
+
+    array[j] = current;
+    
+  }
+
+  return l;
+  
+}
+
+
